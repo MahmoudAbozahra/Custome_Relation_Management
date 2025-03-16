@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
+<div class="text-center">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">first_name</th>
+                <th scope="col">last_name</th>
+                <th scope="col">phone</th>
+                <th scope="col">tall</th>
+                <th scope="col">wight</th>
+                <th scope="col">address</th>
+                <th scope="col">category</th>
+                <th scope="col">Date</th>
+                <th scope="col">View</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if results %} {% for result in results %}
+            <tr>
+                <th scope="row">{{ result.id }}</th>
+                <td>{{ result.first_name }}</td>
+                <td>{{ result.last_name }}</td>
+                <td>{{ result.phone }}</td>
+                <td>{{ result.tall }}</td>
+                <td>{{ result.wight }}</td>
+                <td>{{ result.address }}</td>
+                <td>{{ result.category }}</td>
+                <td>{{ result.created_at|date:"Y-m-d" }}</td>
+                <td>
+                    <a href="{% url 'view' result.id %}" class="btn btn-outline-primary btn-sm">View</a>
+                </td>
+            </tr>
+            {% endfor %} {% else %}
+            <tr>
+                <td colspan="110" class="text-center">
+                    <br>
+                    <div class="alert-warning" role="alert">Not Found</div>
+                </td>
+            </tr>
+            {%endif%}
+        </tbody>
+    </table>
+
+</div>
+
+
+{% endblock content %}

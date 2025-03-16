@@ -1,0 +1,73 @@
+{% extends 'base.html'%} {% block content %}
+
+
+
+<h1 style="padding-left:50px ;">Welcome to the dashboard page,<b>{{user}}👋 </b></h1>
+
+<div style="padding-left:50px ;">
+    <hr style="border:1px solid black ; margin: 20px 10px;">
+
+    <a href="{% url 'add_clint' %}" class="btn btn-outline-primary">Add Clint <i class="fa fa-plus" aria-hidden="true"></i></a>
+
+</div>
+<hr style="border:1px solid black ; margin: 20px 10px;"> {% include 'parts/alerts.html' %}
+
+
+<div class="text-center" style="margin: 0px 100px;">
+    <form action="{% url 'search' %}" method="get">
+        <input type="search" name="query" placeholder="write something here" class="form-control mr-sm-2">
+        <button type="submit" class="btn btn-outline-dark w-100 btn-block p-2">Searsh</button>
+
+
+    </form>
+    <hr style="border:1px solid black ; margin: 20px 10px;">
+
+
+
+</div>
+
+<div class="text-center">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">first_name</th>
+                <th scope="col">last_name</th>
+                <th scope="col">phone</th>
+                <th scope="col">tall</th>
+                <th scope="col">wight</th>
+                <th scope="col">address</th>
+                <th scope="col">category</th>
+                <th scope="col">Date</th>
+                <th scope="col">View</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if clints %} {% for clint in clints %}
+            <tr>
+                <th scope="row">{{ clint.id }}</th>
+                <td>{{ clint.first_name }}</td>
+                <td>{{ clint.last_name }}</td>
+                <td>{{ clint.phone }}</td>
+                <td>{{ clint.tall }}</td>
+                <td>{{ clint.wight }}</td>
+                <td>{{ clint.address }}</td>
+                <td>{{ clint.category }}</td>
+                <td>{{ clint.created_at|date:"Y-m-d" }}</td>
+                <td>
+                    <a href="{% url 'view' clint.id %}" class="btn btn-outline-primary btn-sm">View</a>
+                </td>
+            </tr>
+            {% endfor %} {% else %}
+            <tr>
+                <td colspan="110" class="text-center">
+                    <br>
+                    <div class="alert-warning" role="alert">You don't have any clint</div>
+                </td>
+            </tr>
+            {%endif%}
+        </tbody>
+    </table>
+
+</div>
+{% endblock content %}

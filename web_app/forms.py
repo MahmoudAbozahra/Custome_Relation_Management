@@ -24,3 +24,5 @@ class ClintForm(forms.ModelForm):
         model = Clint  
         fields = ['first_name','last_name','phone','tall','wight','address','category'] 
    
+
+

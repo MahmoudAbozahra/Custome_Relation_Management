@@ -60,8 +60,13 @@ def my_logout(request):
     
 @login_required(login_url='my_login')
 def dashboard(request):
-    clint = Clint.objects.all()
-    return render(request,'web/dashboard.html',{'clints':clint})
+    clints = Clint.objects.all()
+    form = ClintForm()
+    context = {
+        'clints': clints,
+        'form': form,
+    }
+    return render(request, 'web/dashboard.html', context)
                 
         
         

@@ -1,29 +1,52 @@
-{% extends 'base.html'%} {% block content %}
-
-
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{% block content %}
 
 <h1 style="padding-left:50px ;">Welcome to the dashboard page,<b>{{user}}👋 </b></h1>
 
 <div style="padding-left:50px ;">
     <hr style="border:1px solid black ; margin: 20px 10px;">
 
-    <a href="{% url 'add_clint' %}" class="btn btn-outline-primary">Add Clint <i class="fa fa-plus" aria-hidden="true"></i></a>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addClintModal">
+      Add Clint <i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
 
 </div>
-<hr style="border:1px solid black ; margin: 20px 10px;"> {% include 'parts/alerts.html' %}
 
+<!-- Modal -->
+<div class="modal fade" id="addClintModal" tabindex="-1" role="dialog" aria-labelledby="addClintModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method="POST" action="{% url 'add_clint' %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="addClintModalLabel">Add New Clint</h5>
+          <button type="button" class="close ms-auto" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{ form|crispy}}  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save Clint</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<hr style="border:1px solid black ; margin: 20px 10px;"> 
+{% include 'parts/alerts.html' %}
 
 <div class="text-center" style="margin: 0px 100px;">
     <form action="{% url 'search' %}" method="get">
         <input type="search" name="query" placeholder="write something here" class="form-control mr-sm-2">
         <button type="submit" class="btn btn-outline-dark w-100 btn-block p-2">Searsh</button>
-
-
     </form>
     <hr style="border:1px solid black ; margin: 20px 10px;">
-
-
-
 </div>
 
 <div class="text-center">
@@ -43,7 +66,8 @@
             </tr>
         </thead>
         <tbody>
-            {% if clints %} {% for clint in clints %}
+            {% if clints %} 
+            {% for clint in clints %}
             <tr>
                 <th scope="row">{{ clint.id }}</th>
                 <td>{{ clint.first_name }}</td>
@@ -58,7 +82,8 @@
                     <a href="{% url 'view' clint.id %}" class="btn btn-outline-primary btn-sm">View</a>
                 </td>
             </tr>
-            {% endfor %} {% else %}
+            {% endfor %} 
+            {% else %}
             <tr>
                 <td colspan="110" class="text-center">
                     <br>
@@ -68,6 +93,6 @@
             {%endif%}
         </tbody>
     </table>
-
 </div>
+
 {% endblock content %}

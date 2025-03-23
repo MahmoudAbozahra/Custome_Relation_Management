@@ -3,11 +3,12 @@
 <div class="container bg-light shadow-md p-5 form-layout">
 
     <h1>Login </h1>
+    {% include 'parts/alerts.html' %}
 
     <hr>
     <form method="POST" ,autocomplete="off">
 
-        {% csrf_token %} {{form|crispy}} {% include 'parts/alerts.html' %}
+        {% csrf_token %} {{form|crispy}} 
         <br>
 
         <button type="submit" class="btn btn-outline-primary ">Login <i class="fa fa-key" aria-hidden="true"></i></button>

@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 import logging
 from django.contrib import messages
+
+
 # Create your views here.
 def index(request):
     return render(request , 'web/index.html')
@@ -32,7 +34,7 @@ def register(request):
 def my_login(request):
     form = LoginForm()
     if request.method == 'POST':
-        form=LoginForm(request , data=request.POST)
+        form=LoginForm(request , data=request.POST) 
         if form.is_valid():
             username=request.POST.get('username')
             password=request.POST.get('password')
@@ -100,6 +102,8 @@ def view(request,id):
     
     return render(request,'web/view.html', {'clint': clint})
 
+
+
 @login_required(login_url='my_login')
 def edit(request,id):
     clint = get_object_or_404(Clint , id=id)
@@ -107,6 +111,7 @@ def edit(request,id):
         clint_update = ClintForm(request.POST , instance=clint)
         if clint_update.is_valid():
             clint_update.save()
+            messages.success(request,'Clint updated successfuly!')
             return redirect('dashboard')
     else:
         clint_update=ClintForm(instance=clint)
@@ -115,8 +120,7 @@ def edit(request,id):
     
     return render(request,'web/edit.html', {'form': clint_update})
 
-from django.db.models import Q
-import logging
+
 
 logger = logging.getLogger(__name__)
 
